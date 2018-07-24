@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var gulp = require("gulp");
 
 var sourcemaps = require("gulp-sourcemaps"),
@@ -81,10 +80,3 @@ gulp.task('watch', function () {
 
 
 gulp.task('default', ['scss:compile', 'watch']);
-=======
-var gulp = require('gulp');
-
-gulp.task('default', function(){
-  console.log('dd');
-})
->>>>>>> d27b9373ead0a7a4db121ae797c5e34fbfa1d646
