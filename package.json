@@ -10,8 +10,11 @@
   "license": "ISC",
   "devDependencies": {
     "gulp": "^3.9.1",
+<<<<<<< HEAD
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
+=======
+>>>>>>> d27b9373ead0a7a4db121ae797c5e34fbfa1d646
     "gulp-uglify": "^3.0.0"
   }
 }
