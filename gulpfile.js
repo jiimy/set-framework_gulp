@@ -1,7 +1,8 @@
 var gulp = require("gulp");
 
 var sourcemaps = require("gulp-sourcemaps"),
-  scss = require("gulp-sass");
+  scss = require("gulp-sass"),
+  livereload = require("gulp-livereload");
 
 /*
  * ==============================+
@@ -14,6 +15,25 @@ var paths = {
   //js : src + '/js/**/*.js',
   scss: src + "/sass/**/*.scss"
 };
+
+/*
+ * ==============================+
+ * @CSSS : HTML livereload 반영
+ * ==============================+
+*/
+gulp.task('html', function () {
+  return gulp
+    /*
+     * html 파일을 읽어오기 위해 경로 지정
+    */
+    .src('./**/*.html')
+
+    /*
+     * html파일을 읽어온 후 livereload 호출하여 브라우저에 반영
+    */
+    .pipe(livereload());
+});
+
 
 
 /*
@@ -40,7 +60,7 @@ var scssOptions = {
    * indentWidth (>= v3.0.0, Type : Integer , Default : 2) 
    * 컴파일 된 CSS의 "들여쓰기" 의 갯수 
   */
-  indentWidth: 1, // outputStyle 이 nested, expanded 인 경우에 사용 
+  indentWidth: 1, // outputStyle 이 nested, expanded 인 경우에 사용
 
   /*
    * precision (Type : Integer , Default : 5) 
@@ -55,28 +75,40 @@ var scssOptions = {
   sourceComments: true
 };
 
-
-gulp.task('scss:compile', function () {
+gulp.task("scss:compile", function () {
   return gulp
-    // SCSS 파일을 읽어온다. 
+    // SCSS 파일을 읽어온다.
     .src(paths.scss)
 
     // 소스맵 초기화(소스맵을 생성)
     .pipe(sourcemaps.init())
 
     // SCSs 함수에 옵션값을 설정, sCSS 작성시 watch가 멈추지 않도록 logError를 설정
-    .pipe(scss(scssOptions).on('error', scss.logError))
+    .pipe(scss(scssOptions).on("error", scss.logError))
 
-    // 위에서 생성한 소스맵을 사용한다. 
+    // 위에서 생성한 소스맵을 사용한다.
     .pipe(sourcemaps.write())
 
     // 목적지(destination)을 설정
-    .pipe(gulp.dest(dist + '/css'))
+    .pipe(gulp.dest(dist + "/css"))
+
+    /*
+     * SCSS 컴파일을 수행한 후 livereload 호출하여 브라우저에 반영
+     */
+    .pipe(livereload());
 });
 
-gulp.task('watch', function () {
-  gulp.watch(paths.scss, ['scss:compile']);
+gulp.task('live', ['html', 'scss:compile'], function () {
+  // livereload.listen() 옵션값으로 기본경로를 지정
+  livereload.listen(
+    { basePath: dist }
+  );
 });
 
+gulp.task("watch", function () {
+  gulp.watch('./**/*.html', ['html']); // html task를 watch에 등록
+  gulp.watch(paths.scss, ["scss:compile"]);
+});
 
-gulp.task('default', ['scss:compile', 'watch']);
+// gulp.task("default", ["scss:compile", "watch"]);
+gulp.task("default", ["live", "watch"]);
