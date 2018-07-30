@@ -140,3 +140,6 @@ typings/
 
 
 # End of https://www.gitignore.io/api/node,intellij,visualstudiocode
+
+### gulp ignore test ### 
+*/text3.txt
