@@ -141,4 +141,4 @@ typings/
 # End of https://www.gitignore.io/api/node,intellij,visualstudiocode
 
 ### gulp ignore test ### 
-/text1~test4.txt
+/**/test3.txt
