@@ -2,7 +2,8 @@ var gulp = require("gulp");
 
 var sourcemaps = require("gulp-sourcemaps"),
   scss = require("gulp-sass"),
-  livereload = require("gulp-livereload");
+  livereload = require("gulp-livereload"),
+  fileinclude = require('gulp-file-include');
 
 /*
  * ==============================+
@@ -33,6 +34,22 @@ gulp.task('html', function () {
     */
     .pipe(livereload());
 });
+
+
+/*
+ * ==============================+
+ * @파일 인크루드
+ * ==============================+
+*/
+gulp.task('fileinclude',function(){
+  gulp.src(['./project/src/index.html','./project/src/sub/*.html'], {base : './'})
+  .pipe(fileinclude({
+    prefix:'@@',
+    basePath:'@file'
+  }))
+  .pipe(gulp.dest('./'));
+})
+
 
 
 
