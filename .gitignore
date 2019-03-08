@@ -140,6 +140,4 @@ typings/
 
 # End of https://www.gitignore.io/api/node,intellij,visualstudiocode
 
-### gulp ignore test ### 
-test2.txt
-test3/
+package.lock.json
